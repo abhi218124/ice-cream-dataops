@@ -1,0 +1,2 @@
+externalId: wf_icapi_data_pipeline
+description: Workflow to orchestrate the Ice Cream API data pipeline. The workflow executes data extraction, transformation, and ingestion tasks to load and update data in Cognite Data Fusion (CDF).

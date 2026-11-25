@@ -1,0 +1,37 @@
+workflowExternalId: wf_icapi_data_pipeline
+version: "1"
+
+workflowDefinition:
+  tasks:
+    - externalId: create_asset_hierarchy_task
+      type: transformation
+      parameters:
+        transformation:
+          externalId: create_asset_hierarchy
+
+    - externalId: contextualize_ts_assets_task
+      type: transformation
+      parameters:
+        transformation:
+          externalId: contextualize_ts_assets
+      dependsOn:
+        - externalId: create_asset_hierarchy_task
+
+    - externalId: icapi_datapoints_extractor_task
+      type: function
+      parameters:
+        function:
+          externalId: icapi_datapoints_extractor
+          data:
+            hours: 1
+      dependsOn:
+        - externalId: contextualize_ts_assets_task
+
+    - externalId: oee_timeseries_task
+      type: function
+      parameters:
+        function:
+          externalId: oee_timeseries
+          data: {}
+      dependsOn:
+        - externalId: icapi_datapoints_extractor_task
